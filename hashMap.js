@@ -71,4 +71,12 @@ class HashMap{
             return false;
         }
     }
+    length(){
+        return this.size;
+    }
+    clear(){
+        this.capacity = 16;
+        this.size = 0;
+        this.buckets = new Array(this.capacity);
+    }
 }
