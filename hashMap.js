@@ -44,4 +44,14 @@ class HashMap{
             return null;
         }
     }
+    has(key){
+        const index = this.hash(key);
+        if(!this.buckets[index]) return false;
+        else{
+            for(const bucket of this.buckets[index]){
+                if(bucket[0] === key) return true;
+            }
+            return false;
+        }
+    }
 }
