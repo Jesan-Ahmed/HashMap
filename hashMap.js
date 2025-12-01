@@ -54,4 +54,21 @@ class HashMap{
             return false;
         }
     }
+    remove(key){
+        const index = this.hash(key);
+        if(!this.buckets[index]) return false;
+        else{
+            const bucket = this.buckets[index];
+            for(let i = 0; i < bucket.length; i++){
+                if(bucket[i][0] === key){
+                    bucket.splice(i, 1);
+                    if(bucket.length === 0) this.buckets[index] = null;
+                    this.size--;
+                    return true;
+                }
+                
+            }
+            return false;
+        }
+    }
 }
