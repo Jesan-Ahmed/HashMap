@@ -14,9 +14,11 @@ class HashMap{
     }
     set(key, value){
         const index = this.hash(key);
+        
         if(!this.buckets[index]){
             this.buckets[index] = [[key, value]];
             this.size++;
+            this.#checkLoadCapacity();
         }
         else{
             let isInBucket = false;
@@ -30,8 +32,10 @@ class HashMap{
             if(!isInBucket){
                 this.buckets[index].push([key, value]);
                 this.size++;
+                this.#checkLoadCapacity();
             }
         }
+        
         
     }
     get(key){
@@ -111,5 +115,22 @@ class HashMap{
             }
         }
         return arr;
+    }
+    #checkLoadCapacity(){
+        if(this.size > this.loadFactor * this.capacity) this.#resize();
+    }
+    #resize(){
+        this.capacity = this.capacity * 2;
+        const oldBuckets = this.buckets;
+        this.buckets = new Array(this.capacity);
+        this.size = 0;
+
+        for(let i = 0; i< oldBuckets.length; i++){
+            if(oldBuckets[i]){
+                for(const bucket of oldBuckets[i]){
+                    this.set(bucket[0], bucket[1]);
+                }
+            }
+        }
     }
 }
